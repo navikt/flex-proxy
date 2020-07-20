@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "target": "ES2017",
+        "module": "commonjs",
+        "skipLibCheck": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "allowJs": false,
+        "outDir": "build",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "lib": [
+            "dom",
+            "es2017",
+            "esnext.asynciterable",
+            "es6"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

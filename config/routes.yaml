@@ -1,0 +1,8 @@
+GET:
+    api:
+        v1: 
+            - vedtak
+POST:
+    api:
+        v1:
+            - vedtak
