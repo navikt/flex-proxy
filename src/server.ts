@@ -7,7 +7,7 @@ import pathsFromConfig from './parse-config'
 
 const app = express()
 const port = 8080
-const paths = pathsFromConfig('./config/routes.yaml')
+const paths = pathsFromConfig(`${process.env.PROXY_CONFIG}`)
 
 
 interface StringMap {
@@ -15,6 +15,7 @@ interface StringMap {
 }
 
 const addHeaders = (proxyReq: http.ClientRequest, req: express.Request) => {
+    proxyReq.setHeader('x-nav-apiKey', `${process.env.SERVICE_GATEWAY_KEY}`)
     if (req.headers.cookie && !req.headers.Authorization) {
         const parsed = cookie.parse(req.headers.cookie)
         if (parsed && parsed['selvbetjening-idtoken']) {
@@ -49,6 +50,26 @@ const addProxy = (method: string, path: string, target: string) => {
                 onProxyReq: addHeaders,
             }),
         )
+    } else if (method === 'DELETE') {
+        router.delete(
+            '*',
+            createProxyMiddleware({
+                target,
+                changeOrigin: true,
+                pathRewrite,
+                onProxyReq: addHeaders,
+            }),
+        )
+    } else if (method === 'PUT') {
+        router.put(
+            '*',
+            createProxyMiddleware({
+                target,
+                changeOrigin: true,
+                pathRewrite,
+                onProxyReq: addHeaders,
+            }),
+        )
     }
 
     app.use(path, router)
@@ -69,7 +90,7 @@ app.use(function(req, res, next) {
 })
 
 Object.keys(paths).forEach(method => {
-    paths[method].forEach(path => addProxy(method, path, path))
+    paths[method].forEach(path => addProxy(method, path, `${process.env.SERVICE_GATEWAY_URL}${path}`))
 })
 
 app.listen(port, () => console.log(`flex-proxy kjører og lytter på port ${port}`))

@@ -1,8 +1,14 @@
 GET:
     api:
-        v1: 
-            - vedtak
+        v1:
+            - list
+            - test
 POST:
+    - api/v1/test
+DELETE:
+    api:
+        - v1/test
+PUT:
     api:
         v1:
-            - vedtak
+            test:

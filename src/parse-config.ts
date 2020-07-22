@@ -7,7 +7,7 @@ const loadFile = (filename: string) => {
 }
 
 const verifyBaseKeys = (config: Record<string, unknown>): boolean => {
-    const acceptedMethods = [ 'POST', 'GET' ]
+    const acceptedMethods = [ 'POST', 'GET', 'PUT', 'DELETE' ]
     return Object.keys(config).every(key => acceptedMethods.includes(key))
 }
 
