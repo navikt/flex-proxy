@@ -12,7 +12,6 @@ const paths = pathsFromConfig(`${process.env.PROXY_CONFIG}`)
 app.get('/isAlive', (req, res) => res.send('I\'m alive!'))
 app.get('/isReady', (req, res) => res.send('I\'m ready!'))
 
-
 interface StringMap {
     [index: string]: string
 }
