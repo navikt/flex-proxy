@@ -30,7 +30,7 @@ const addHeaders = (proxyReq: http.ClientRequest, req: express.Request) => {
 const addProxy = (method: string, path: string, target: string) => {
     const router = express.Router()
 
-    const pathRewriteKey = `^${path}`
+    const pathRewriteKey = `^${path}/`
     const pathRewrite: StringMap = {}
     pathRewrite[pathRewriteKey] = '/'
     if (method === 'GET') {
