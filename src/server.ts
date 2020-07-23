@@ -9,6 +9,9 @@ const app = express()
 const port = 8080
 const paths = pathsFromConfig(`${process.env.PROXY_CONFIG}`)
 
+app.get('/isAlive', (req, res) => res.send('I\'m alive!'))
+app.get('/isReady', (req, res) => res.send('I\'m ready!'))
+
 
 interface StringMap {
     [index: string]: string
@@ -88,6 +91,8 @@ app.use(function(req, res, next) {
         next()
     }
 })
+
+
 
 Object.keys(paths).forEach(method => {
     paths[method].forEach(path => addProxy(method, path, `${process.env.SERVICE_GATEWAY_URL}${path}`))

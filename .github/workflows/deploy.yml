@@ -42,12 +42,6 @@ jobs:
           echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
       - name: Push Docker image
         run: docker push ${IMAGE}
-      - name: deploy flex-proxy to dev-sbs
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-sbs
-          RESOURCE: nais-dev.yaml
   deploy:
     name: Deploy flex-proxy to q1-sbs (Q1)
     runs-on: ubuntu-latest
@@ -67,4 +61,4 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-sbs
-          RESOURCE: nais-q1.yaml
+          RESOURCE: nais-dev.yaml
