@@ -34,6 +34,7 @@ spec:
     enabled: true
   ingresses:
     - "https://flexmockproxy.dev.nav.no"
+    - "https://flexmockproxy.intern.dev.nav.no"
   env:
     - name: PROXY_CONFIG
       value: config/routes.yaml
