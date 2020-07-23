@@ -1,14 +1,4 @@
 GET:
-    api:
-        v1:
-            - list
-            - test
-POST:
-    - api/v1/test
-DELETE:
-    api:
-        - v1/test
-PUT:
-    api:
-        v1:
-            test:
+    - hentAktoerIdByFnr
+    - hentFnrByAktoerId
+    - nullstill
