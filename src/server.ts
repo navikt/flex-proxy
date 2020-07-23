@@ -91,8 +91,6 @@ app.use(function(req, res, next) {
     }
 })
 
-
-
 Object.keys(paths).forEach(method => {
     paths[method].forEach(path => addProxy(method, path, `${process.env.SERVICE_GATEWAY_URL}${path}`))
 })
