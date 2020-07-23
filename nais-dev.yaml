@@ -33,7 +33,7 @@ spec:
   vault:
     enabled: true
   ingresses:
-    - "https://flexmockproxy.dev.adeo.no"
+    - "https://flexmockproxy.dev.nav.no"
     - "https://flexmockproxy.intern.dev.nav.no"
   env:
     - name: PROXY_CONFIG
