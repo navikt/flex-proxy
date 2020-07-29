@@ -1,10 +1,10 @@
 name: Deploy to dev
 on:
-  - push:
-      paths:
-        - src/**
-        - syfomock/**
-        - .github/workflows/syfomock.yml
+  push:
+    paths:
+      - src/**
+      - syfomock/**
+      - .github/workflows/syfomock.yml
 env:
   APP: flex-proxy
 jobs:
