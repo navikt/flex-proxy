@@ -4,6 +4,16 @@ En (forhåpentligvis) enkel proxy for å knytte applikasjoner i forskjellige son
 Prinsippet er likt [syfoproxy](https://github.com/navikt/syfoproxy), men med restriksjoner
 på hvilke endepunkter som er lov å forespørre. Dette gjøres gjennom en yaml-fil.
 
+## eksempel
+
+Enn så lenge kan konfigurasjonen i `syfomock/`, samt `.github/workflows/syfomock.yml` anses som referanse
+til hvordan det kan settes opp.
+
+## proxy-konfigurasjon
+
+**TODO**: Skriv en fin guide basert på [dette StackOverflow-spørsmålet](https://stackoverflow.com/c/nav-it/questions/324/646#646)
+for hvordan man kan sette opp en ny gateway for en proxy.
+
 ## yaml config
 
 Tillatte metoder akkurat nå er `GET`, `POST`, `DELETE` og `PUT`, så om du har et endepunkt `/api/v1/test` som

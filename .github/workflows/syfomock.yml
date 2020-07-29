@@ -1,6 +1,10 @@
 name: Deploy to dev
 on:
-  - push
+  - push:
+      paths:
+        - src/**
+        - syfomock/**
+        - .github/workflows/syfomock.yml
 env:
   APP: flex-proxy
 jobs:
@@ -61,4 +65,4 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-sbs
-          RESOURCE: nais-dev.yaml
+          RESOURCE: syfomock/nais-dev.yaml

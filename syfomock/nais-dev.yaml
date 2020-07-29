@@ -37,4 +37,4 @@ spec:
     - "https://flexmockproxy.intern.dev.nav.no"
   env:
     - name: PROXY_CONFIG
-      value: config/routes.yaml
+      value: syfomock/routes.yaml
