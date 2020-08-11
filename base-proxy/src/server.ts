@@ -7,7 +7,7 @@ import pathsFromConfig from './parse-config'
 
 const app = express()
 const port = 8080
-const paths = pathsFromConfig(`${process.env.PROXY_CONFIG}`)
+const paths = pathsFromConfig('routes.yaml')
 
 app.get('/isAlive', (req, res) => res.send('I\'m alive!'))
 app.get('/isReady', (req, res) => res.send('I\'m ready!'))
@@ -28,6 +28,9 @@ const addHeaders = (proxyReq: http.ClientRequest, req: express.Request) => {
 }
 
 const addProxy = (method: string, path: string, target: string) => {
+
+    console.log(`Mapper ${method} - ${path} til ${target}`)
+
     const router = express.Router()
 
     const pathRewriteKey = `^${path}/`

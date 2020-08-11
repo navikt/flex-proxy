@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && node ./build/server.js",
     "build": "tsc",
-    "lint": "eslint --ext=ts src"
+    "lint": "eslint --ext=ts src",
+    "lint:fix": "eslint --ext=ts src --fix"
   },
   "author": "",
   "license": "ISC",
