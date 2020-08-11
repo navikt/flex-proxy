@@ -54,7 +54,7 @@ const addProxy = (method: string, path: string, target: string) => {
 
     if (method === 'GET') {
         router.get(
-            '*',
+            '/',
             createProxyMiddleware({
                 target,
                 changeOrigin: true,
@@ -64,7 +64,7 @@ const addProxy = (method: string, path: string, target: string) => {
         )
     } else if (method === 'POST') {
         router.post(
-            '*',
+            '/',
             createProxyMiddleware({
                 target,
                 changeOrigin: true,
@@ -74,7 +74,7 @@ const addProxy = (method: string, path: string, target: string) => {
         )
     } else if (method === 'DELETE') {
         router.delete(
-            '*',
+            '/',
             createProxyMiddleware({
                 target,
                 changeOrigin: true,
@@ -84,7 +84,7 @@ const addProxy = (method: string, path: string, target: string) => {
         )
     } else if (method === 'PUT') {
         router.put(
-            '*',
+            '/',
             createProxyMiddleware({
                 target,
                 changeOrigin: true,
@@ -96,7 +96,7 @@ const addProxy = (method: string, path: string, target: string) => {
         console.error(`Ukjent HTTP metode ${method}`)
     }
 
-    router.options('*', (req, res) => {
+    router.options('/', (req, res) => {
         res.sendStatus(204)
         res.end()
     })
