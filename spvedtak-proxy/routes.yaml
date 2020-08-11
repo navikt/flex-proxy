@@ -1,2 +1,2 @@
 GET:
-    - /api/v1/vedtak
+    - api/v1/vedtak

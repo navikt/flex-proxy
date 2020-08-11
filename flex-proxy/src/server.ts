@@ -96,7 +96,7 @@ app.use(function(req, res, next) {
 })
 
 Object.keys(paths).forEach(method => {
-    paths[method].forEach(path => addProxy(method, path, `${process.env.SERVICE_GATEWAY_URL}${path}`))
+    paths[method].forEach(path => addProxy(method, path, `${process.env.SERVICE_GATEWAY_URL}`))
 })
 
 app.listen(port, () => console.log(`flex-proxy kjører og lytter på port ${port}`))

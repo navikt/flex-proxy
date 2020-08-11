@@ -1,14 +1,14 @@
-name: Deploy to dev
+name: Bygg flex proxy
 on:
   push:
     paths:
-      - base-proxy/src/**
-      - .github/workflows/base-proxy.yml
+      - flex-proxy/src/**
+      - .github/workflows/flex-proxy.yml
 env:
   APP: flex-proxy
 jobs:
   build:
-    name: Build application and publish to docker
+    name: Bygg flex proxy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,15 +20,9 @@ jobs:
           VERSION=$TIME-$COMMIT
           echo "::set-env name=IMAGE::"docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP:$VERSION""
           echo "::set-env name=VERSION::"$VERSION""
-      - run: echo $VERSION > VERSION.txt
-      - name: Last opp VERSION til neste job
-        uses: actions/upload-artifact@v1
-        with:
-          name: VERSION.txt
-          path: VERSION.txt
       - name: Bygg image
         run: |
-          cd base-proxy
+          cd flex-proxy
           npm ci
           npm audit --audit-level=moderate
           npm run lint
