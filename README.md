@@ -44,7 +44,7 @@ I skrivende stund er tre miljøvariabler nødvendige.
 
 | Variabel | Beskrivelse |
 | - | - |
-| `PROXY_CONFIG` | Sti til yaml config |
+| `ALLOWED_ORIGINS` | Kommaseparert tillatte origins |
 | `SERVICE_GATEWAY_URL` | URL til gateway for applikasjonen |
 | `SERVICE_GATEWAY_KEY` | Nøkkel til gateway for applikasjonen |
 
