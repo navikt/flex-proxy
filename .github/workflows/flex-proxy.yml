@@ -1,0 +1,38 @@
+name: Bygg flex proxy
+on:
+  push:
+    paths:
+      - flex-proxy/**
+      - .github/workflows/flex-proxy.yml
+env:
+  APP: flex-proxy
+jobs:
+  build:
+    name: Bygg flex proxy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Generer versjon og image navn
+        run: |
+          TIME=$(TZ="Europe/Oslo" date +%Y.%m.%d-%H.%M)
+          COMMIT=$(git rev-parse --short=8 HEAD)
+          VERSION=$TIME-$COMMIT
+          echo "::set-env name=IMAGE::"docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP:$VERSION""
+          echo "::set-env name=VERSION::"$VERSION""
+      - name: Bygg image
+        run: |
+          cd flex-proxy
+          npm ci
+          npm audit --audit-level=moderate
+          npm run lint
+          npm run build
+          docker build -t ${IMAGE} .
+      - name: Login to Github Package Registry
+        env:
+          DOCKER_USERNAME: x-access-token
+          DOCKER_PASSWORD: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
+      - name: Push Docker image
+        run: docker push ${IMAGE}

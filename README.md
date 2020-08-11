@@ -6,7 +6,7 @@ på hvilke endepunkter som er lov å forespørre. Dette gjøres gjennom en yaml-
 
 ## eksempel
 
-Enn så lenge kan konfigurasjonen i `syfomock/`, samt `.github/workflows/syfomock.yml` anses som referanse
+Enn så lenge kan konfigurasjonen i `spinnsyn-backend-proxy/`, samt `.github/workflows/spinnsyn-backend-proxy.yml` anses som referanse
 til hvordan det kan settes opp.
 
 ## proxy-konfigurasjon
