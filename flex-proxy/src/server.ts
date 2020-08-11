@@ -9,6 +9,8 @@ const app = express()
 const port = 8080
 const paths = pathsFromConfig('routes.yaml')
 
+const allowedOrigins = (process.env.ALLOWED_ORIGINS as string).split(',')
+
 app.get('/isAlive', (req, res) => res.send('I\'m alive!'))
 app.get('/isReady', (req, res) => res.send('I\'m ready!'))
 
@@ -27,6 +29,17 @@ const addHeaders = (proxyReq: http.ClientRequest, req: express.Request) => {
     }
 }
 
+app.use((req, res, next) => {
+    if (allowedOrigins.includes(req.headers.origin as string)) {
+        res.header('Access-Control-Allow-Origin', req.headers.origin)
+        res.header('Access-Control-Allow-Credentials', 'true')
+    }
+    res.header('Access-Control-Allow-Methods', 'DELETE, POST, PUT, GET, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept')
+    res.header('Cache-Control', 'no-cache, no-store, must-revalidate')
+    next()
+})
+
 const addProxy = (method: string, path: string, target: string) => {
 
     console.log(`Mapper ${method} - ${path} til ${target}`)
@@ -36,6 +49,7 @@ const addProxy = (method: string, path: string, target: string) => {
     const pathRewriteKey = `^${path}/`
     const pathRewrite: StringMap = {}
     pathRewrite[pathRewriteKey] = '/'
+
     if (method === 'GET') {
         router.get(
             '*',
@@ -76,24 +90,17 @@ const addProxy = (method: string, path: string, target: string) => {
                 onProxyReq: addHeaders,
             }),
         )
+    } else {
+        console.error(`Ukjent HTTP metode ${method}`)
     }
+
+    router.options('*', (req, res) => {
+        res.sendStatus(204)
+        res.end()
+    })
 
     app.use(path, router)
 }
-
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', req.headers.origin)
-    res.header('Access-Control-Allow-Methods', 'DELETE, POST, PUT, GET, OPTIONS')
-    res.header('Access-Control-Allow-Credentials', 'true')
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept')
-
-    if (req.method === 'OPTIONS') {
-        res.sendStatus(204)
-        res.end()
-    } else {
-        next()
-    }
-})
 
 Object.keys(paths).forEach(method => {
     paths[method].forEach(path => addProxy(method, path, `${process.env.SERVICE_GATEWAY_URL}`))
