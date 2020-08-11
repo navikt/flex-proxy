@@ -2,7 +2,7 @@ name: Bygg flex proxy
 on:
   push:
     paths:
-      - flex-proxy/src/**
+      - flex-proxy/**
       - .github/workflows/flex-proxy.yml
 env:
   APP: flex-proxy
