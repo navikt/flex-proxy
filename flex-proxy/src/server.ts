@@ -14,6 +14,8 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS as string).split(',')
 app.get('/isAlive', (req, res) => res.send('I\'m alive!'))
 app.get('/isReady', (req, res) => res.send('I\'m ready!'))
 
+app.disable('x-powered-by');
+
 interface StringMap {
     [index: string]: string
 }
