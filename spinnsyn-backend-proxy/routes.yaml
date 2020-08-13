@@ -2,4 +2,4 @@ GET:
     - api/v1/vedtak
     - api/v1/vedtak/:id
 POST:
-    - api/v1/vedtak/:id/lest
+    - api/v1/vedtak/:id/les
