@@ -1,7 +1,7 @@
 import cookie from 'cookie'
 import express from 'express'
 import http from 'http'
-import {createProxyMiddleware} from 'http-proxy-middleware'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
 import pathsFromConfig from './parse-config'
 
