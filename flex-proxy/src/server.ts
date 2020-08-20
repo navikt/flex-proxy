@@ -1,7 +1,7 @@
 import cookie from 'cookie'
 import express from 'express'
 import http from 'http'
-import { createProxyMiddleware } from 'http-proxy-middleware'
+import {createProxyMiddleware} from 'http-proxy-middleware'
 
 import pathsFromConfig from './parse-config'
 
@@ -22,7 +22,6 @@ interface StringMap {
 
 const addHeaders = (proxyReq: http.ClientRequest, req: express.Request) => {
     console.log(`Mottar forespørsel mot ${req.url}`)
-    proxyReq.setHeader('x-nav-apiKey', `${process.env.SERVICE_GATEWAY_KEY}`)
     if (req.headers.cookie && !req.headers.Authorization) {
         const parsed = cookie.parse(req.headers.cookie)
         if (parsed && parsed['selvbetjening-idtoken']) {
