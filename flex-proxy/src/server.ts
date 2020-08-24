@@ -21,7 +21,11 @@ interface StringMap {
 }
 
 const addHeaders = (proxyReq: http.ClientRequest, req: express.Request) => {
-    console.log(`Mottar forespørsel mot ${req.url}`)
+    const apiKey = process.env.SERVICE_GATEWAY_KEY
+    if (apiKey) {
+        proxyReq.setHeader('x-nav-apiKey', apiKey)
+    }
+
     if (req.headers.cookie && !req.headers.Authorization) {
         const parsed = cookie.parse(req.headers.cookie)
         if (parsed && parsed['selvbetjening-idtoken']) {
