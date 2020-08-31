@@ -1,0 +1,8 @@
+GET:
+    - reisetilskudd
+POST:
+    - reisetilskudd
+PUT:
+    - kvittering
+DELETE:
+    - kvittering
