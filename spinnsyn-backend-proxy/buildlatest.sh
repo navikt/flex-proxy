@@ -1,4 +1,4 @@
 echo "Bygger for docker compose utvikling"
 
 
-docker build . -t flexinntektsmelding-proxy:latest
+docker build . -t spinnsyn-backend-proxy:latest
