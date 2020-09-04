@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: spinnsynbackend-proxy
+  name: flexinntektsmelding-proxy
   namespace: flex
   labels:
     team: flex
@@ -13,7 +13,7 @@ spec:
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://spinnsynbackend-proxy.dev.nav.no/"
+    - "https://flexinntektsmelding-proxy.dev.nav.no/"
   liveness:
     path: /isAlive
     initialDelay: 10
@@ -35,10 +35,10 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: spinnsynbackend
+        - application: flex-inntektsmelding
   env:
     - name: ALLOWED_ORIGINS
       value: "https://spvedtak.dev.nav.no"
     - name: SERVICE_GATEWAY_URL
-      value: "http://spinnsynbackend"
+      value: "http://flexinntektsmelding"
 

@@ -1,5 +1,3 @@
 GET:
-    - api/v1/vedtak
-    - api/v1/vedtak/:id
-POST:
-    - api/v1/vedtak/:id/les
+    - api/v1/inntektsmelding/:id
+
