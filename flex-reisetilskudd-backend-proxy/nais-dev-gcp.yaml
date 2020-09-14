@@ -38,7 +38,7 @@ spec:
         - application: flex-reisetilskudd-backend
   env:
     - name: ALLOWED_ORIGINS
-      value: "https://reisetilskudd.dev.nav.no"
+      value: "https://www-q1.dev.nav.no"
     - name: SERVICE_GATEWAY_URL
       value: "http://flex-reisetilskudd-backend"
 
