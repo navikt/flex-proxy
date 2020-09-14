@@ -38,7 +38,7 @@ spec:
         - application: spinnsyn-backend
   env:
     - name: ALLOWED_ORIGINS
-      value: "https://sykepenger.dev.nav.no"
+      value: "https://www-q1.dev.nav.no"
     - name: SERVICE_GATEWAY_URL
       value: "http://spinnsyn-backend"
 
