@@ -40,5 +40,5 @@ spec:
     - name: ALLOWED_ORIGINS
       value: "https://www-q1.dev.nav.no,https://flex-vedtak-mock.dev.nav.no"
     - name: SERVICE_GATEWAY_URL
-      value: "http://flexinntektsmelding"
+      value: "http://flex-inntektsmelding"
 
