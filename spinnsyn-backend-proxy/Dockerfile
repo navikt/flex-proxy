@@ -1,4 +1,4 @@
-FROM docker.pkg.github.com/navikt/flex-proxy/flex-proxy:2020.08.11-14.56-ea7855b4
+FROM docker.pkg.github.com/navikt/flex-proxy/flex-proxy:2020.08.24-08.34-177f1afb
 
 WORKDIR /usr/src/app
 COPY . .

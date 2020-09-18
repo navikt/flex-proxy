@@ -1,19 +1,19 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: spinnsyn-backend-proxy
+  name: spinnsyn-backend-mock-proxy
   namespace: flex
   labels:
     team: flex
 spec:
   image: {{ image }}
   replicas:
-    min: 2
+    min: 1
     max: 2
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://spinnsyn-backend-proxy.dev.nav.no/"
+    - "https://spinnsyn-backend-mock-proxy.dev.nav.no/"
   liveness:
     path: /isAlive
     initialDelay: 10
@@ -38,7 +38,7 @@ spec:
         - application: spinnsyn-backend
   env:
     - name: ALLOWED_ORIGINS
-      value: "https://www-q1.dev.nav.no,https://tjenester-q1.nav.no"
+      value: "https://flex-vedtak-mock.dev.nav.no"
     - name: SERVICE_GATEWAY_URL
       value: "http://spinnsyn-backend"
 
