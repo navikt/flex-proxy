@@ -13,7 +13,7 @@ spec:
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://flexinntektsmelding-proxy.dev.nav.no/"
+    - "https://flexinntektsmelding-proxy.nav.no/"
   liveness:
     path: /isAlive
     initialDelay: 10
@@ -38,6 +38,6 @@ spec:
         - application: flex-inntektsmelding
   env:
     - name: ALLOWED_ORIGINS
-      value: "https://www-gcp.dev.nav.no,https://flex-vedtak-mock.dev.nav.no"
+      value: "https://www.nav.no,https://tjenester.nav.no"
     - name: SERVICE_GATEWAY_URL
       value: "http://flex-inntektsmelding"
