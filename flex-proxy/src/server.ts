@@ -7,6 +7,7 @@ import pathsFromConfig from './parse-config'
 
 const app = express()
 const port = 8080
+const authCookieName = process.env.AUTH_COOKIE_NAME as string || 'selvbetjening-idtoken'
 const paths = pathsFromConfig('routes.yaml')
 
 const allowedOrigins = (process.env.ALLOWED_ORIGINS as string).split(',')
@@ -28,8 +29,8 @@ const addHeaders = (proxyReq: http.ClientRequest, req: express.Request) => {
 
     if (req.headers.cookie && !req.headers.Authorization) {
         const parsed = cookie.parse(req.headers.cookie)
-        if (parsed && parsed['selvbetjening-idtoken']) {
-            proxyReq.setHeader('Authorization', `Bearer ${parsed['selvbetjening-idtoken']}`)
+        if (parsed && parsed[authCookieName]) {
+            proxyReq.setHeader('Authorization', `Bearer ${parsed[authCookieName]}`)
         }
     }
 }
