@@ -13,7 +13,7 @@ spec:
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://spinnsyn-backend-veileder-proxy.dev.adeo.no/"
+    - "https://spinnsyn-backend-veileder-proxy.dev.intern.nav.no/"
   liveness:
     path: /isAlive
     initialDelay: 10
