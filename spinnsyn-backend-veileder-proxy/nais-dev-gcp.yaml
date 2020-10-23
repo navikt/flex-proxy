@@ -38,7 +38,7 @@ spec:
         - application: spinnsyn-backend
   env:
     - name: ALLOWED_ORIGINS
-      value: "https://syfomodiaperson.nais.preprod.local"
+      value: "N/A"
     - name: SERVICE_GATEWAY_URL
       value: "http://spinnsyn-backend"
     - name: AUTH_COOKIE_NAME
