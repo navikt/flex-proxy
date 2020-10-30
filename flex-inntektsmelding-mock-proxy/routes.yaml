@@ -1,4 +1,0 @@
-POST:
-    - api/v1/mock/inntektsmeldinger/:fnr
-DELETE:
-    - api/v1/mock/inntektsmeldinger/:fnr
