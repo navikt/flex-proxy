@@ -1,4 +1,0 @@
-GET:
-    - api/v1/inntektsmeldinger
-    - api/v1/inntektsmeldinger/:id
-
