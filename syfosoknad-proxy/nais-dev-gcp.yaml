@@ -1,0 +1,44 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: syfosoknad-proxy
+  namespace: flex
+  labels:
+    team: flex
+spec:
+  image: {{ image }}
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 90
+  port: 8080
+  ingresses:
+    - "https://syfosoknad-proxy.dev.nav.no/"
+  liveness:
+    path: /isAlive
+    initialDelay: 10
+    timeout: 5
+    periodSeconds: 5
+    failureThreshold: 30
+  readiness:
+    path: /isReady
+    initialDelay: 10
+    periodSeconds: 5
+    timeout: 5
+  resources:
+    limits:
+      cpu: 100m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+  accessPolicy:
+    outbound:
+      rules:
+        - application: syfosoknad
+  env:
+    - name: ALLOWED_ORIGINS
+      value: "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no"
+    - name: SERVICE_GATEWAY_URL
+      value: "http://syfosoknad"
+
