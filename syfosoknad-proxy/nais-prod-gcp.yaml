@@ -13,7 +13,7 @@ spec:
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://syfsoknad-proxy.nav.no/"
+    - "https://syfosoknad-proxy.nav.no/"
   liveness:
     path: /isAlive
     initialDelay: 10
@@ -34,11 +34,11 @@ spec:
       memory: 50Mi
   accessPolicy:
     outbound:
-      rules:
-        - application: spinnsyn-backend
+      external:
+        - host: api-gw.oera.no
   env:
     - name: ALLOWED_ORIGINS
       value: "https://www.nav.no,https://tjenester.nav.no"
     - name: SERVICE_GATEWAY_URL
-      value: "http://syfosoknad"
+      value: "https://api-gw.oera.no/syfosoknad"
 

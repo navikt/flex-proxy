@@ -34,11 +34,11 @@ spec:
       memory: 50Mi
   accessPolicy:
     outbound:
-      rules:
-        - application: syfosoknad
+      external:
+        - host: api-gw-q1.oera.no
   env:
     - name: ALLOWED_ORIGINS
       value: "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no"
     - name: SERVICE_GATEWAY_URL
-      value: "http://syfosoknad"
+      value: "https://api-gw-q1.oera.no/syfosoknad"
 

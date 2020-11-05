@@ -1,5 +1,4 @@
 GET:
-    - /syfosoknad/api/veileder/internad/soknader
     - /api/arbeidsgiver
     - /api/soknader
     - /api/sykeforloep
@@ -9,7 +8,7 @@ GET:
     - /api/sykmeldinger/:sykmeldingId/soknader
 POST:
     - /cronjob
-    - /api//opprettSoknadUtland
+    - /api/opprettSoknadUtland
     - /api/soknader/:id/send
     - /api/soknader/:id/ettersendTilNav
     - /api/soknader/:id/ettersendTilArbeidsgiver
