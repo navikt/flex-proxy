@@ -1,20 +1,20 @@
 GET:
-    - /api/arbeidsgiver
-    - /api/soknader
-    - /api/sykeforloep
-    - /api/sykmeldinger/:sykmeldingId/actions/behandlet
-    - /api/sykmeldinger/:sykmeldingId/actions/erUtenforVentetid
-    - /api/sykmeldinger/:sykmeldingId/soknader
+    - api/arbeidsgiver
+    - api/soknader
+    - api/sykeforloep
+    - api/sykmeldinger/:sykmeldingId/actions/behandlet
+    - api/sykmeldinger/:sykmeldingId/actions/erUtenforVentetid
+    - api/sykmeldinger/:sykmeldingId/soknader
 POST:
-    - /api/opprettSoknadUtland
-    - /api/soknader/:id/send
-    - /api/soknader/:id/ettersendTilNav
-    - /api/soknader/:id/ettersendTilArbeidsgiver
-    - /api/soknader/:id/avbryt
-    - /api/soknader/:id/gjenapne
-    - /api/soknader/:id/korriger
-    - /api/soknader/:id/mottaker
-    - /api/soknader/:id/finnMottaker
-    - /api/sykmeldinger/:sykmeldingId/actions/skalOppretteSoknad
+    - api/opprettSoknadUtland
+    - api/soknader/:id/send
+    - api/soknader/:id/ettersendTilNav
+    - api/soknader/:id/ettersendTilArbeidsgiver
+    - api/soknader/:id/avbryt
+    - api/soknader/:id/gjenapne
+    - api/soknader/:id/korriger
+    - api/soknader/:id/mottaker
+    - api/soknader/:id/finnMottaker
+    - api/sykmeldinger/:sykmeldingId/actions/skalOppretteSoknad
 PUT:
-    - /api/soknader/:soknadId/sporsmal/:sporsmalId
+    - api/soknader/:soknadId/sporsmal/:sporsmalId
