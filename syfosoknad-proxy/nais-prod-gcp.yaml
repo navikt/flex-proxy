@@ -36,6 +36,8 @@ spec:
     outbound:
       external:
         - host: api-gw.oera.no
+  envFrom:
+    - secret: syfosoknad-gateway-api-gw-apikey
   env:
     - name: ALLOWED_ORIGINS
       value: "https://www.nav.no,https://tjenester.nav.no"
