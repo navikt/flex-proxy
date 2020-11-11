@@ -1,5 +1,5 @@
 GET:
-    - api/arbeidsgiver
+    - api/arbeidsgiver/soknader
     - api/soknader
     - api/sykeforloep
     - api/sykmeldinger/:sykmeldingId/actions/behandlet
