@@ -39,6 +39,7 @@ app.use((req, res, next) => {
     if (allowedOrigins.includes(req.headers.origin as string)) {
         res.header('Access-Control-Allow-Origin', req.headers.origin)
         res.header('Access-Control-Allow-Credentials', 'true')
+        res.header('Access-Control-Allow-Headers', 'nav_csrf_protection, x-app-started-timestamp')
     }
     res.header('Access-Control-Allow-Methods', 'DELETE, POST, PUT, GET, OPTIONS')
     res.header('Access-Control-Allow-Headers', 'Content-Type, Accept')
