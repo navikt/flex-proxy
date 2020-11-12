@@ -41,7 +41,7 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Credentials', 'true')
     }
     res.header('Access-Control-Allow-Methods', 'DELETE, POST, PUT, GET, OPTIONS')
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, nav_csrf_protection, x-app-started-timestamp')
     res.header('Cache-Control', 'no-cache, no-store, must-revalidate')
     next()
 })
