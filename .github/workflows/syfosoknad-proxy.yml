@@ -96,12 +96,34 @@ jobs:
           path: .
       - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
       - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP:$VERSION" >> $GITHUB_ENV
-      - name: Deploy to dev-gcp
+      - name: Deploy to prod-gcp
         uses: nais/deploy/actions/deploy@master
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: syfosoknad-proxy/nais-prod-gcp.yaml
+
+  deploy-to-prod-sbs:
+    if: github.ref == 'refs/heads/master'
+    name: Deploy to prod-sbs
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Download VERSION-artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: VERSION.txt
+          path: .
+      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP:$VERSION" >> $GITHUB_ENV
+      - name: Deploy to prod-sbs
+        uses: nais/deploy/actions/deploy@master
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-sbs
+          RESOURCE: syfosoknad-proxy/nais-prod-sbs.yaml
 
   tag-image-as-latest:
     if: github.ref == 'refs/heads/master'
