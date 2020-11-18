@@ -2,6 +2,7 @@ import cookie from 'cookie'
 import express from 'express'
 import http from 'http'
 import { createProxyMiddleware } from 'http-proxy-middleware'
+import https from 'https'
 
 import pathsFromConfig from './parse-config'
 
@@ -16,6 +17,13 @@ app.get('/isAlive', (req, res) => res.send('I\'m alive!'))
 app.get('/isReady', (req, res) => res.send('I\'m ready!'))
 
 app.disable('x-powered-by')
+
+const target = `${process.env.SERVICE_GATEWAY_URL}`
+
+let agent: https.Agent | http.Agent = new https.Agent({ keepAlive: true })
+if(target.startsWith('http://')){
+    agent = new http.Agent({ keepAlive: true })
+}
 
 interface StringMap {
     [index: string]: string
@@ -60,6 +68,7 @@ const addProxy = (method: string, path: string, target: string) => {
         router.get(
             '/',
             createProxyMiddleware({
+                agent,
                 target,
                 changeOrigin: true,
                 pathRewrite,
@@ -70,6 +79,7 @@ const addProxy = (method: string, path: string, target: string) => {
         router.post(
             '/',
             createProxyMiddleware({
+                agent,
                 target,
                 changeOrigin: true,
                 pathRewrite,
@@ -80,6 +90,7 @@ const addProxy = (method: string, path: string, target: string) => {
         router.delete(
             '/',
             createProxyMiddleware({
+                agent,
                 target,
                 changeOrigin: true,
                 pathRewrite,
@@ -90,6 +101,7 @@ const addProxy = (method: string, path: string, target: string) => {
         router.put(
             '/',
             createProxyMiddleware({
+                agent,
                 target,
                 changeOrigin: true,
                 pathRewrite,
@@ -109,7 +121,7 @@ const addProxy = (method: string, path: string, target: string) => {
 }
 
 Object.keys(paths).forEach(method => {
-    paths[method].forEach(path => addProxy(method, path, `${process.env.SERVICE_GATEWAY_URL}`))
+    paths[method].forEach(path => addProxy(method, path, target))
 })
 
 app.listen(port, () => console.log(`flex-proxy kjører og lytter på port ${port}`))
