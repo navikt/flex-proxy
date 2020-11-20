@@ -1,4 +1,5 @@
-FROM docker.pkg.github.com/navikt/flex-proxy/flex-proxy:2020.11.19-07.53-716ab341
+FROM navikt/java:14
 
-WORKDIR /usr/src/app
-COPY . .
+COPY target/app.jar /app/
+
+ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"

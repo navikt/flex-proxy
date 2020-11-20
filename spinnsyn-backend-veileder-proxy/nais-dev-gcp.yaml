@@ -27,11 +27,11 @@ spec:
     timeout: 5
   resources:
     limits:
-      cpu: 100m
-      memory: 200Mi
+      cpu: 500m
+      memory: 1024Mi
     requests:
-      cpu: 20m
-      memory: 50Mi
+      cpu: 200m
+      memory: 768Mi
   accessPolicy:
     outbound:
       rules:
