@@ -27,6 +27,11 @@ class ProxyController(
         @Value("\${auth.cookie.name}") private val cookieName: String) {
 
     val remoteService: URI = URI.create(url)
+    val basePath = if (remoteService.path == "/") {
+        ""
+    } else {
+        remoteService.path
+    }
     val logger = log()
     val hasServiceGatewayKey = serviceGatewayKey != ""
 
@@ -39,7 +44,7 @@ class ProxyController(
             return ResponseEntity(HttpStatus.NOT_FOUND.reasonPhrase, HttpStatus.NOT_FOUND)
         }
         val uri = requestEntity.url.run {
-            URI(remoteService.scheme, userInfo, remoteService.host, remoteService.port, path, query, fragment)
+            URI(remoteService.scheme, userInfo, remoteService.host, remoteService.port, basePath +path, query, fragment)
         }
         val cookie = WebUtils.getCookie(request, cookieName)
 
