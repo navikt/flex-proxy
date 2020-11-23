@@ -1,0 +1,5 @@
+get:
+  - api/v1/tester
+  - /api/v1/tester/{id}
+post:
+  - api/v1/tester/{id}/les

@@ -1,0 +1,9 @@
+service.gateway.url: "http://service"
+service.gateway.key: "nøkkæl"
+allowed.origins: "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no"
+auth.cookie.name: "selvbetjening-idtoken"
+spring:
+  profiles:
+    active: test
+
+logging.config: "classpath:logback-local.xml"
