@@ -16,22 +16,22 @@ spec:
     - "https://syfosoknad-proxy-sbs.dev.nav.no/"
   liveness:
     path: /isAlive
-    initialDelay: 10
+    initialDelay: 30
     timeout: 5
     periodSeconds: 5
     failureThreshold: 30
   readiness:
     path: /isReady
-    initialDelay: 10
+    initialDelay: 30
     periodSeconds: 5
     timeout: 5
   resources:
     limits:
-      cpu: 150m
-      memory: 200Mi
+      cpu: 500m
+      memory: 1024Mi
     requests:
-      cpu: 100m
-      memory: 100Mi
+      cpu: 200m
+      memory: 768Mi
   envFrom:
     - secret: syfosoknad-gateway-api-gw-apikey
   env:
