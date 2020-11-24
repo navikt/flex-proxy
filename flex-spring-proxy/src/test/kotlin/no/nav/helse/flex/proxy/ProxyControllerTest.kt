@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
 import java.net.URI
 import javax.servlet.http.Cookie
@@ -74,10 +76,40 @@ class ProxyControllerTest {
                 .andExpect(content().string(equalTo("{\"hei\":123}")))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "https://www-gcp.dev.nav.no"))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"))
-        .andReturn()
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
+                .andReturn()
 
         mockServer.verify()
     }
+
+    @Test
+    fun `Returnerer ikke andre headere videre fra backend enn contenttype`() {
+        mockServer.expect(ExpectedCount.once(),
+                requestTo(URI("http://service/api/v1/tester/1234?yo=hei")))
+                .andExpect(method(HttpMethod.GET))
+                .andExpect(headerDoesNotExist("Authorization"))
+                .andExpect(header("x-nav-apiKey", "nøkkæl"))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .headers(HttpHeaders.writableHttpHeaders(HttpHeaders()
+                                .also { it.set("X-Global-Transaction-ID", "15452e785fbbd0972229b1df") }))
+                        .body("{\"hei\": 123}"))
+
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tester/1234?yo=hei")
+                .header(HttpHeaders.ORIGIN, "https://www-gcp.dev.nav.no")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(content().string(equalTo("{\"hei\":123}")))
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "https://www-gcp.dev.nav.no"))
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"))
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
+                .andExpect(MockMvcResultMatchers.header().doesNotExist("X-Global-Transaction-ID"))
+                .andReturn()
+
+        mockServer.verify()
+    }
+
 
     @Test
     fun `Proxyer GET request til service som returnerer 401`() {
@@ -181,7 +213,7 @@ class ProxyControllerTest {
 
     @Test
     fun `Options returnerer 404 ved feil`() {
-        
+
         mockMvc.perform(MockMvcRequestBuilders.options("/ukjentApi")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isNotFound)

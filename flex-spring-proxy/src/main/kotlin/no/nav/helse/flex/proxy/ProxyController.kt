@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.util.WebUtils
 import java.net.URI
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import kotlin.collections.HashMap
 
 
 @RestController
@@ -26,14 +30,14 @@ class ProxyController(
         @Value("\${service.gateway.key}") private val serviceGatewayKey: String,
         @Value("\${auth.cookie.name}") private val cookieName: String) {
 
-    val remoteService: URI = URI.create(url)
-    val basePath = if (remoteService.path == "/") {
+    private final val remoteService: URI = URI.create(url)
+    private val basePath: String = if (remoteService.path == "/") {
         ""
     } else {
         remoteService.path
     }
-    val logger = log()
-    val hasServiceGatewayKey = serviceGatewayKey != ""
+    private val logger = log()
+    private val hasServiceGatewayKey = serviceGatewayKey != ""
 
     @RequestMapping("/**")
     fun proxy(requestEntity: RequestEntity<Any>, @RequestParam params: HashMap<String, String>, request: HttpServletRequest): ResponseEntity<Any> {
@@ -44,7 +48,7 @@ class ProxyController(
             return ResponseEntity(HttpStatus.NOT_FOUND.reasonPhrase, HttpStatus.NOT_FOUND)
         }
         val uri = requestEntity.url.run {
-            URI(remoteService.scheme, userInfo, remoteService.host, remoteService.port, basePath +path, query, fragment)
+            URI(remoteService.scheme, userInfo, remoteService.host, remoteService.port, basePath + path, query, fragment)
         }
         val cookie = WebUtils.getCookie(request, cookieName)
 
@@ -68,7 +72,14 @@ class ProxyController(
                 requestEntity.method, uri
         )
 
-        return proxyService.call(forward)
+        val responseEntity = proxyService.call(forward)
+
+        val newHeaders: MultiValueMap<String, String> = LinkedMultiValueMap()
+        responseEntity.headers.contentType?.let {
+            newHeaders.set("Content-type", it.toString());
+        }
+
+        return ResponseEntity(responseEntity.body, newHeaders, responseEntity.statusCode);
     }
 
     @ExceptionHandler(HttpStatusCodeException::class)
