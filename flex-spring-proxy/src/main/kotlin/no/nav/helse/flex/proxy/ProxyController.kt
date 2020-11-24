@@ -3,10 +3,7 @@ package no.nav.helse.flex.proxy
 import no.nav.helse.flex.endpoints.EndpointMatcher
 import no.nav.helse.flex.log
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
-import org.springframework.http.RequestEntity
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -83,7 +80,7 @@ class ProxyController(
     }
 
     @ExceptionHandler(HttpStatusCodeException::class)
-    fun handleErrorRequests(response: HttpServletResponse, e: HttpStatusCodeException) {
+    fun handleHttpStatusCodeException(response: HttpServletResponse, e: HttpStatusCodeException) {
         response.status = e.rawStatusCode
         if (e.responseHeaders != null) {
             val contentType = e.responseHeaders!!.contentType
@@ -95,5 +92,13 @@ class ProxyController(
         if (listOf(HttpStatus.GATEWAY_TIMEOUT.value(), HttpStatus.BAD_GATEWAY.value(), HttpStatus.SERVICE_UNAVAILABLE.value()).contains(response.status)) {
             logger.error("Feil ved proxying til backend ${response.status}", e)
         }
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun handleException(response: HttpServletResponse, e: Exception) {
+        logger.error("Feil ved proxying til backend", e)
+        response.status = 500
+        response.contentType = MediaType.TEXT_PLAIN_VALUE
+        response.outputStream.write(HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase.toByteArray())
     }
 }
