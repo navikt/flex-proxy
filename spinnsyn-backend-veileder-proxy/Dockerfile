@@ -1,5 +1,3 @@
-FROM navikt/java:14
+FROM docker.pkg.github.com/navikt/flex-proxy/flex-spring-proxy:2020.11.24-15.38-59ce9970
 
-COPY target/app.jar /app/
-
-ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
+COPY ./routes.yaml /app/

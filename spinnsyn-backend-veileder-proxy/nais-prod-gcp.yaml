@@ -37,8 +37,6 @@ spec:
       rules:
         - application: spinnsyn-backend
   env:
-    - name: ALLOWED_ORIGINS
-      value: "N/A"
     - name: SERVICE_GATEWAY_URL
       value: "http://spinnsyn-backend"
     - name: AUTH_COOKIE_NAME
