@@ -40,7 +40,7 @@ spec:
     - secret: syfosoknad-gateway-api-gw-apikey
   env:
     - name: ALLOWED_ORIGINS
-      value: "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no"
+      value: "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no,https://flex-vedtak-mock.dev.nav.no"
     - name: SERVICE_GATEWAY_URL
       value: "https://api-gw-q1.oera.no/syfosoknad"
 

@@ -1,2 +1,2 @@
-GET:
+get:
     - api/v1/veileder/vedtak

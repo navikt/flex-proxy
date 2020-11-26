@@ -27,18 +27,18 @@ spec:
     timeout: 5
   resources:
     limits:
-      cpu: 100m
-      memory: 200Mi
+      cpu: 500m
+      memory: 1024Mi
     requests:
-      cpu: 50m
-      memory: 50Mi
+      cpu: 200m
+      memory: 768Mi
   accessPolicy:
     outbound:
       rules:
         - application: spinnsyn-backend
   env:
     - name: ALLOWED_ORIGINS
-      value: "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no"
+      value: "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no,https://flex-vedtak-mock.dev.nav.no"
     - name: SERVICE_GATEWAY_URL
       value: "http://spinnsyn-backend"
 

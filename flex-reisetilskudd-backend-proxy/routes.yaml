@@ -1,8 +1,8 @@
-GET:
+get:
     - api/v1/reisetilskudd
-PUT:
-    - api/v1/reisetilskudd/:id
-POST:
+put:
+    - api/v1/reisetilskudd/{id}
+post:
     - api/v1/kvittering
-DELETE:
-    - api/v1/kvittering/:id
+delete:
+    - api/v1/kvittering/{id}

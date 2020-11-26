@@ -1,5 +1,3 @@
-echo "Bygger syfoapi latest for docker compose utvikling"
-
-mvn clean install -D skipTests
+echo "Bygger for docker compose utvikling"
 
 docker build . -t spinnsyn-backend-veileder-proxy:latest
