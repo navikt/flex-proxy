@@ -16,13 +16,13 @@ spec:
     - "https://spinnsyn-backend-proxy.dev.nav.no/"
   liveness:
     path: /isAlive
-    initialDelay: 10
+    initialDelay: 90
     timeout: 5
     periodSeconds: 5
     failureThreshold: 30
   readiness:
     path: /isReady
-    initialDelay: 10
+    initialDelay: 90
     periodSeconds: 5
     timeout: 5
   resources:
