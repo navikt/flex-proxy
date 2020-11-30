@@ -2,8 +2,10 @@ package no.nav.helse.flex.proxy
 
 import no.nav.helse.flex.endpoints.EndpointMatcher
 import no.nav.helse.flex.log
+import org.apache.catalina.connector.ClientAbortException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -96,6 +98,11 @@ class ProxyController(
 
     @ExceptionHandler(Exception::class)
     fun handleException(response: HttpServletResponse, e: Exception) {
+        if(e is HttpMessageNotReadableException && e.cause is ClientAbortException){
+            logger.warn("Feil ved proxying til backend", e)
+            return
+        }
+
         logger.error("Feil ved proxying til backend", e)
         response.status = 500
         response.contentType = MediaType.TEXT_PLAIN_VALUE
