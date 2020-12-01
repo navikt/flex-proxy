@@ -98,8 +98,8 @@ class ProxyController(
 
     @ExceptionHandler(Exception::class)
     fun handleException(response: HttpServletResponse, e: Exception) {
-        if(e is HttpMessageNotReadableException && e.cause is ClientAbortException){
-            logger.warn("Feil ved proxying til backend", e)
+        if(e.isClientError()){
+            logger.warn("Client aborted", e)
             return
         }
 
@@ -108,4 +108,9 @@ class ProxyController(
         response.contentType = MediaType.TEXT_PLAIN_VALUE
         response.outputStream.write(HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase.toByteArray())
     }
+
+    private fun Exception.isClientError(): Boolean {
+        return (this is HttpMessageNotReadableException && this.cause is ClientAbortException) || this is ClientAbortException
+    }
 }
+
