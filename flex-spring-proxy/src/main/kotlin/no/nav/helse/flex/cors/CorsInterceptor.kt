@@ -36,6 +36,10 @@ class CorsInterceptor(
                 response.status = 404
             }
         }
+        if (request.method == HttpMethod.HEAD.name) {
+            response.status = 405
+            return false
+        }
         return true
     }
 

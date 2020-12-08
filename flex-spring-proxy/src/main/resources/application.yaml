@@ -10,3 +10,5 @@ logging.config: "classpath:logback.xml"
 auth.cookie.name: "selvbetjening-idtoken"
 service.gateway.key: ""
 allowed.origins: ""
+
+no.warning.paths: "/,/metrics,/ads.txt,/robots.txt"
