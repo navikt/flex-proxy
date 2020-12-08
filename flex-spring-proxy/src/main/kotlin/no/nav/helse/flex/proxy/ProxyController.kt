@@ -8,10 +8,7 @@ import org.springframework.http.*
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.util.WebUtils
 import java.net.URI
@@ -27,7 +24,8 @@ class ProxyController(
         private val endpointMatcher: EndpointMatcher,
         @Value("\${service.gateway.url}") private val url: String,
         @Value("\${service.gateway.key}") private val serviceGatewayKey: String,
-        @Value("\${auth.cookie.name}") private val cookieName: String) {
+        @Value("\${auth.cookie.name}") private val cookieName: String,
+        @Value("\${no.warning.paths}") private val noWarningPaths: String) {
 
     private final val remoteService: URI = URI.create(url)
     private val basePath: String = if (remoteService.path == "/") {
@@ -37,13 +35,16 @@ class ProxyController(
     }
     private val logger = log()
     private val hasServiceGatewayKey = serviceGatewayKey != ""
+    private val noWarningPathsList: List<String> = noWarningPaths.split(",");
 
     @RequestMapping("/**")
     fun proxy(requestEntity: RequestEntity<Any>, @RequestParam params: HashMap<String, String>, request: HttpServletRequest): ResponseEntity<Any> {
 
         val matches = endpointMatcher.matches(requestEntity.method, requestEntity.url.path)
         if (!matches) {
-            logger.warn("Ingen mapping funnet for ${requestEntity.method} -  ${requestEntity.url.path} ")
+            if(!noWarningPathsList.contains(requestEntity.url.path)){
+                logger.warn("Ingen mapping funnet for ${requestEntity.method} -  ${requestEntity.url.path} ")
+            }
             return ResponseEntity(HttpStatus.NOT_FOUND.reasonPhrase, HttpStatus.NOT_FOUND)
         }
         val uri = requestEntity.url.run {
@@ -98,7 +99,7 @@ class ProxyController(
 
     @ExceptionHandler(Exception::class)
     fun handleException(response: HttpServletResponse, e: Exception) {
-        if(e.isClientError()){
+        if (e.isClientError()) {
             logger.warn("Client aborted", e)
             return
         }

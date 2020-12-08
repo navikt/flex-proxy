@@ -50,8 +50,8 @@ class ProxyControllerTest {
     @Test
     fun `Returnerer 404 for api som ikke er eksponert`() {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/erIkkeTilgejngelig")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isNotFound)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
                 .andExpect(content().string(equalTo("Not Found")))
                 .andReturn()
     }
@@ -71,8 +71,8 @@ class ProxyControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tester/1234?yo=hei")
                 .header(HttpHeaders.ORIGIN, "https://www-gcp.dev.nav.no")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isOk)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(content().string(equalTo("{\"hei\":123}")))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "https://www-gcp.dev.nav.no"))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"))
@@ -98,8 +98,8 @@ class ProxyControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tester/1234?yo=hei")
                 .header(HttpHeaders.ORIGIN, "https://www-gcp.dev.nav.no")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isOk)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(content().string(equalTo("{\"hei\":123}")))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "https://www-gcp.dev.nav.no"))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"))
@@ -121,8 +121,8 @@ class ProxyControllerTest {
 
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tester/1234?yo=hei")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isUnauthorized)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized)
                 .andExpect(content().bytes(byteArrayOf()))
                 .andReturn()
 
@@ -141,8 +141,8 @@ class ProxyControllerTest {
 
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tester/1234?yo=hei")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isInternalServerError)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError)
                 .andExpect(content().string(equalTo("{\"error\": 123}")))
                 .andReturn()
 
@@ -163,8 +163,8 @@ class ProxyControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/tester/1234/les?yo=hei")
                 .cookie(Cookie("selvbetjening-idtoken", "ey-hey-ho"))
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isOk)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(content().string(equalTo("{\"hei\":123}")))
                 .andReturn()
 
@@ -186,8 +186,8 @@ class ProxyControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/tester/1234/les?yo=hei")
                 .header("Authorization", "secret123")
                 .cookie(Cookie("selvbetjening-idtoken", "ey-hey-ho"))
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isOk)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(content().string(equalTo("{\"hei\":123}")))
                 .andReturn()
 
@@ -199,9 +199,8 @@ class ProxyControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.options("/api/v1/tester/1234?yo=hei")
                 .header(HttpHeaders.ORIGIN, "https://www-gcp.dev.nav.no")
-
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isOk)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "https://www-gcp.dev.nav.no"))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"))
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, OPTIONS, DELETE, PUT"))
@@ -213,11 +212,28 @@ class ProxyControllerTest {
 
     @Test
     fun `Options returnerer 404 ved feil`() {
-
         mockMvc.perform(MockMvcRequestBuilders.options("/ukjentApi")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isNotFound)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
                 .andReturn()
 
+    }
+
+    @Test
+    fun `Head gir 405`() {
+        mockMvc.perform(MockMvcRequestBuilders.head("/")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isMethodNotAllowed)
+                .andReturn()
+    }
+
+    @Test
+    fun `Metrics logger ikke warning`() {
+        mockMvc.perform(MockMvcRequestBuilders.get("/metrics")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
+                .andReturn()
+
+        // Assert på logging mangler, men kan brukes til å titte manuelt
     }
 }

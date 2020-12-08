@@ -1,3 +1,3 @@
-FROM docker.pkg.github.com/navikt/flex-proxy/flex-spring-proxy:2020.12.01-10.33-6dfe0d89
+FROM docker.pkg.github.com/navikt/flex-proxy/flex-spring-proxy:2020.12.08-13.09-0a6173a5
 
 COPY ./routes.yaml /app/
