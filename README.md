@@ -7,11 +7,9 @@ Flytter også over jwt fra cookie til auth header.
 
 ## yaml config
 
-Tillatte metoder styres av routes.yaml fila. Denne bruker
+Tillatte metoder styres av routes.yaml fila. Denne bruker spring sin syntax.
 
-## nødvendige miljøvariabler
-
-I skrivende stund er tre miljøvariabler nødvendige.
+## Miljøvariabler
 
 | Variabel | Beskrivelse |
 | - | - |
