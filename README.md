@@ -18,3 +18,7 @@ Tillatte metoder styres av routes.yaml fila. Denne bruker spring sin syntax.
 | `SERVICE_GATEWAY_KEY` | Nøkkel til api gateway for applikasjonen dersom backend nås via apigw |
 | `SERVICE_LIVENESS_PATH` | Endepunkt i backend proxyen kan teste forbindelse for readiness mot backend.  |
 
+
+## Kontakt oss
+
+Vi er på slack kanalen #flex
