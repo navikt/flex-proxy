@@ -8,3 +8,5 @@ spring:
 
 logging.config: "classpath:logback-local.xml"
 no.warning.paths: "/,/metrics,/ads.txt,/robots.txt"
+
+service.liveness.path: "/is_alive"

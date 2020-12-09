@@ -2,6 +2,7 @@ name: Bygg spinnsyn-backend-proxy
 on:
   push:
     paths:
+      - naiserator.yaml
       - spinnsyn-backend-proxy/**
       - .github/workflows/spinnsyn-backend-proxy.yml
 env:
@@ -58,7 +59,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: spinnsyn-backend-proxy/nais-dev-gcp.yaml
+          RESOURCE: naiserator.yaml
+          VARS: spinnsyn-backend-proxy/dev-gcp.json
 
   deploy-to-prod:
     if: github.ref == 'refs/heads/master'
@@ -75,12 +77,13 @@ jobs:
           path: .
       - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
       - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP:$VERSION" >> $GITHUB_ENV
-      - name: Deploy to dev-gcp
+      - name: Deploy to prod-gcp
         uses: nais/deploy/actions/deploy@master
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: spinnsyn-backend-proxy/nais-prod-gcp.yaml
+          RESOURCE: naiserator.yaml
+          VARS: spinnsyn-backend-proxy/prod-gcp.json
 
   tag-image-as-latest:
     if: github.ref == 'refs/heads/master'
