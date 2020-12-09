@@ -26,6 +26,9 @@ spec:
     periodSeconds: 5
     timeout: 5
     failureThreshold: 30
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
   resources:
     limits:
       cpu: 300m
