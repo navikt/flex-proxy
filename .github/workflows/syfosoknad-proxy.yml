@@ -2,6 +2,7 @@ name: Bygg syfosoknad-proxy
 on:
   push:
     paths:
+      - naiserator.yaml
       - syfosoknad-proxy/**
       - .github/workflows/syfosoknad-proxy.yml
 env:
@@ -58,7 +59,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: syfosoknad-proxy/nais-dev-gcp.yaml
+          RESOURCE: naiserator.yaml
+          VARS: syfosoknad-proxy/dev-gcp.json
 
   deploy-to-prod:
     if: github.ref == 'refs/heads/master'
@@ -80,7 +82,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: syfosoknad-proxy/nais-prod-gcp.yaml
+          RESOURCE: naiserator.yaml
+          VARS: syfosoknad-proxy/prod-gcp.json
 
 
   tag-image-as-latest:

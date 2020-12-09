@@ -1,0 +1,14 @@
+{
+  "app": "spinnsyn-backend-veileder-proxy",
+  "ingress": "https://spinnsyn-backend-veileder-proxy.dev.intern.nav.no/",
+  "minReplicas": 1,
+  "maxReplicas": 2,
+  "outboundApplications": [
+    "spinnsyn-backend"
+  ],
+  "env": {
+    "SERVICE_GATEWAY_URL": "http://spinnsyn-backend",
+    "SERVICE_LIVENESS_PATH": "/is_alive",
+    "AUTH_COOKIE_NAME": "isso-idtoken"
+  }
+}

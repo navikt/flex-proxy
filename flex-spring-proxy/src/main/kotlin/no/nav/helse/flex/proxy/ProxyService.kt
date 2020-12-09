@@ -8,12 +8,9 @@ import org.springframework.web.client.exchange
 
 
 @Component
-class ProxyService(
-        private val restTemplate: RestTemplate) {
-
+class ProxyService(private val restTemplate: RestTemplate) {
 
     fun call(requestEntity: RequestEntity<Any>): ResponseEntity<Any> {
-
         return restTemplate.exchange(requestEntity)
     }
 }

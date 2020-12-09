@@ -2,6 +2,7 @@ name: Bygg spinnsyn-backend-mock-proxy
 on:
   push:
     paths:
+      - naiserator.yaml
       - spinnsyn-backend-mock-proxy/**
       - .github/workflows/spinnsyn-backend-mock-proxy.yml
 env:
@@ -58,7 +59,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: spinnsyn-backend-mock-proxy/nais-dev-gcp.yaml
+          RESOURCE: naiserator.yaml
+          VARS: spinnsyn-backend-mock-proxy/dev-gcp.json
 
   tag-image-as-latest:
     if: github.ref == 'refs/heads/master'

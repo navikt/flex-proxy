@@ -1,0 +1,14 @@
+{
+  "app": "flex-reisetilskudd-backend-proxy",
+  "ingress": "https://flex-reisetilskudd-backend-proxy.nav.no/",
+  "minReplicas": 2,
+  "maxReplicas": 2,
+  "outboundApplications": [
+    "flex-reisetilskudd-backend"
+  ],
+  "env": {
+    "ALLOWED_ORIGINS": "https://www.nav.no,https://tjenester.nav.no",
+    "SERVICE_GATEWAY_URL": "http://flex-reisetilskudd-backend",
+    "SERVICE_LIVENESS_PATH": "/is_alive"
+  }
+}

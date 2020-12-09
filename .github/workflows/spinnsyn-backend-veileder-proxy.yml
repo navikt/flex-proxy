@@ -2,6 +2,7 @@ name: Bygg spinnsyn-backend-veileder-proxy
 on:
   push:
     paths:
+      - naiserator.yaml
       - spinnsyn-backend-veileder-proxy/**
       - .github/workflows/spinnsyn-backend-veileder-proxy.yml
 env:
@@ -58,7 +59,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: spinnsyn-backend-veileder-proxy/nais-dev-gcp.yaml
+          RESOURCE: naiserator.yaml
+          VARS: spinnsyn-backend-veileder-proxy/dev-gcp.json
 
   deploy-to-prod:
     if: github.ref == 'refs/heads/master'
@@ -80,7 +82,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: spinnsyn-backend-veileder-proxy/nais-prod-gcp.yaml
+          RESOURCE: naiserator.yaml
+          VARS: spinnsyn-backend-veileder-proxy/prod-gcp.json
 
   tag-image-as-latest:
     if: github.ref == 'refs/heads/master'
