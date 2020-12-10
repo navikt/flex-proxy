@@ -7,6 +7,6 @@ spring:
     active: test
 
 logging.config: "classpath:logback-local.xml"
-no.warning.paths: "/,/metrics,/ads.txt,/robots.txt"
+no.warning.paths: "/,/ads.txt"
 
 service.liveness.path: "/is_alive"
