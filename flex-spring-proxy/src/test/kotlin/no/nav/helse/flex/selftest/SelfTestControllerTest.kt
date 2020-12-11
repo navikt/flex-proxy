@@ -1,9 +1,8 @@
 package no.nav.helse.flex.selftest
 
 
-import no.nav.helse.flex.TestApplication
+import no.nav.helse.flex.Application
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -11,8 +10,6 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
@@ -24,16 +21,13 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
 import java.net.URI
-import javax.servlet.http.Cookie
 
 
 @RunWith(SpringRunner::class)
 @AutoConfigureMockMvc
-@SpringBootTest(classes = [TestApplication::class])
+@SpringBootTest(classes = [Application::class])
 class SelfTestControllerTest {
 
     @Autowired
