@@ -1,7 +1,7 @@
 package no.nav.helse.flex.robots
 
 
-import no.nav.helse.flex.TestApplication
+import no.nav.helse.flex.Application
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 
 @RunWith(SpringRunner::class)
 @AutoConfigureMockMvc
-@SpringBootTest(classes = [TestApplication::class])
+@SpringBootTest(classes = [Application::class])
 class RobotsControllerTest {
 
     @Autowired

@@ -42,7 +42,7 @@ class ProxyController(
 
         val matches = endpointMatcher.matches(requestEntity.method, requestEntity.url.path)
         if (!matches) {
-            if(!noWarningPathsList.contains(requestEntity.url.path)){
+            if (!noWarningPathsList.contains(requestEntity.url.path)) {
                 logger.warn("Ingen mapping funnet for ${requestEntity.method} -  ${requestEntity.url.path} ")
             }
             return ResponseEntity(HttpStatus.NOT_FOUND.reasonPhrase, HttpStatus.NOT_FOUND)
@@ -92,16 +92,16 @@ class ProxyController(
             }
         }
         response.outputStream.write(e.responseBodyAsByteArray)
-        if (listOf(HttpStatus.GATEWAY_TIMEOUT.value(), HttpStatus.BAD_GATEWAY.value(), HttpStatus.SERVICE_UNAVAILABLE.value()).contains(response.status)) {
-            logger.error("Feil ved proxying til backend ${response.status}", e)
-        }
     }
 
-    @ExceptionHandler(Exception::class)
+    @ExceptionHandler(Exception::class, RetryableException::class)
     fun handleException(response: HttpServletResponse, e: Exception) {
         if (e.isClientError()) {
             logger.warn("Client aborted", e)
             return
+        }
+        if (e is RetryableException) {
+            logger.error("Retryet ved proxying til backend feilet", e)
         }
 
         logger.error("Feil ved proxying til backend", e)

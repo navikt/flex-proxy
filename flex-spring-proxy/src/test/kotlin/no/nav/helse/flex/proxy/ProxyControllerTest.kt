@@ -1,7 +1,7 @@
 package no.nav.helse.flex.proxy
 
 
-import no.nav.helse.flex.TestApplication
+import no.nav.helse.flex.Application
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
@@ -22,8 +22,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
 import java.net.URI
 import javax.servlet.http.Cookie
@@ -31,7 +29,7 @@ import javax.servlet.http.Cookie
 
 @RunWith(SpringRunner::class)
 @AutoConfigureMockMvc
-@SpringBootTest(classes = [TestApplication::class])
+@SpringBootTest(classes = [Application::class])
 class ProxyControllerTest {
 
     @Autowired
@@ -144,6 +142,52 @@ class ProxyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError)
                 .andExpect(content().string(equalTo("{\"error\": 123}")))
+                .andReturn()
+
+        mockServer.verify()
+    }
+
+    @Test
+    fun `Retryer request tre ganger til service som returnerer 503`() {
+
+        mockServer.expect(ExpectedCount.times(3),
+                requestTo(URI("http://service/api/v1/tester/1234?yo=hei")))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withStatus(HttpStatus.SERVICE_UNAVAILABLE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("Ting hikker errorzzz"))
+
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tester/1234?yo=hei")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError)
+                .andExpect(content().string(equalTo("Internal Server Error")))
+                .andReturn()
+
+        mockServer.verify()
+    }
+
+    @Test
+    fun `Retryer request en gang til service som returnerer 503 og deretter 200 OK`() {
+
+        mockServer.expect(ExpectedCount.once(),
+                requestTo(URI("http://service/api/v1/tester/1234?yo=hei")))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withStatus(HttpStatus.SERVICE_UNAVAILABLE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("Ting hikker errorzzz"))
+
+        mockServer.expect(ExpectedCount.once(),
+                requestTo(URI("http://service/api/v1/tester/1234?yo=hei")))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("{\"hei\": 123}"))
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tester/1234?yo=hei")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(content().string(equalTo("{\"hei\":123}")))
                 .andReturn()
 
         mockServer.verify()
