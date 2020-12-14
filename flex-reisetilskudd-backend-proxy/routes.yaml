@@ -4,5 +4,6 @@ put:
     - api/v1/reisetilskudd/{id}
 post:
     - api/v1/kvittering
+    - api/v1/reisetilskudd/{id}/send
 delete:
     - api/v1/kvittering/{id}
