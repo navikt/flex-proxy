@@ -3,9 +3,9 @@ get:
 put:
     - api/v1/reisetilskudd/{id}
 post:
-    - api/v1/kvittering
     - api/v1/reisetilskudd/{id}/send
     - api/v1/reisetilskudd/{id}/avbryt
     - api/v1/reisetilskudd/{id}/gjenapne
+    - api/v1/reisetilskudd/{id}/kvittering
 delete:
-    - api/v1/kvittering/{id}
+    - api/v1/reisetilskudd/{id}/kvittering/{kvitteringId}
