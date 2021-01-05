@@ -1,0 +1,5 @@
+get:
+    - list
+    - kvittering/{blobName}
+post:
+    - opplasting

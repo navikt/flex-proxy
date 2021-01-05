@@ -1,0 +1,14 @@
+{
+  "app": "flex-bucket-uploader-proxy",
+  "ingress": "https://flex-bucket-uploader-proxy.dev.nav.no/",
+  "minReplicas": 1,
+  "maxReplicas": 2,
+  "outboundApplications": [
+    "flex-bucket-uploader"
+  ],
+  "env": {
+    "ALLOWED_ORIGINS": "https://www-gcp.dev.nav.no",
+    "SERVICE_GATEWAY_URL": "http://flex-reisetilskudd-backend",
+    "SERVICE_LIVENESS_PATH": "/is_alive"
+  }
+}
