@@ -1,5 +1,0 @@
-get:
-    - api/v1/vedtak
-    - api/v1/vedtak/{id}
-post:
-    - api/v1/vedtak/{id}/les
