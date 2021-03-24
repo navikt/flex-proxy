@@ -19,7 +19,7 @@
     <properties>
         <start-class>no.nav.helse.flex.ApplicationKt</start-class>
         <java.version>14</java.version>
-        <kotlin.version>1.4.30</kotlin.version>
+        <kotlin.version>1.4.31</kotlin.version>
         <logstash-logback-encoder.version>4.11</logstash-logback-encoder.version>
     </properties>
 
