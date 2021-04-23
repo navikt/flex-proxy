@@ -9,6 +9,6 @@
   "env": {
     "ALLOWED_ORIGINS": "https://flex-vedtak-mock.dev.nav.no",
     "SERVICE_GATEWAY_URL": "http://spinnsyn-backend",
-    "SERVICE_LIVENESS_PATH": "/is_alive"
+    "SERVICE_LIVENESS_PATH": "/internal/health"
   }
 }

@@ -8,7 +8,7 @@
   ],
   "env": {
     "SERVICE_GATEWAY_URL": "http://spinnsyn-backend",
-    "SERVICE_LIVENESS_PATH": "/is_alive",
+    "SERVICE_LIVENESS_PATH": "/internal/health",
     "AUTH_COOKIE_NAME": "isso-idtoken"
   }
 }
