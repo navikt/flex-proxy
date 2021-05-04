@@ -1,5 +1,6 @@
 post:
     - api/v1/mock/vedtak/{fnr}
     - api/v1/mock/annullering/{fnr}
+    - api/v2/mock/vedtak/{fnr}
 delete:
     - api/v1/mock/vedtak/{fnr}
